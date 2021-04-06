@@ -1,5 +1,6 @@
-# Data Science Capstone
-![](Image/uc-irvine.png)
+<img src="Image/uc-irvine.png" width = '280'>
+
+# Welcome to Data Science Capstone at UC Irvine
 
 Author:
 Zhiyan/Gloria Shen
