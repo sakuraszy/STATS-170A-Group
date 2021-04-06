@@ -2,10 +2,9 @@
 
 # Welcome to Data Science Capstone at UC Irvine
 
-Author:
-Zhiyan/Gloria Shen
-Junfeng Li
-Yuehai Shen
+## Zhiyan/Gloria Shen
+## Junfeng Li
+## Yuehai Shen
 
 ## House Pricing Predicting 
 
