@@ -1,6 +1,6 @@
 <img src="Image/uc-irvine.png" width = '280'>
 
-# Welcome to House Pricing Predicting Capstone at UC Irvine
+# Welcome to House Pricing Predicting Capstone Project at UC Irvine
 
 Zhiyan/Gloria Shen 
 Junfeng Li 
