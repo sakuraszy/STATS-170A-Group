@@ -28,7 +28,7 @@ ggbiplot(mtcars.pca,ellipse=TRUE,  labels=rownames(mtcars), groups=mtcars.countr
 ```
 
 ```{r}
-demo_data = demographic_refined.2
+demo_data = demographic_cluster_testing
 ```
 
 ```{r}
@@ -39,7 +39,7 @@ demo_data = demo_data %>%
 ```
 
 ```{r}
-demo_data.pca = prcomp(demo_data[,c(5,6,8:33)], center = TRUE,scale. = TRUE)
+demo_data.pca = prcomp(demo_data[,c(5,6,8,10:34)], center = TRUE,scale. = TRUE)
 ```
 
 ```{r}
@@ -53,11 +53,12 @@ ggbiplot(demo_data.pca)
 
 
 ```{r}
-labels = unlist(demo_data[34])
+labels = unlist(demo_data[9])
 ggbiplot(demo_data.pca, ellipse=TRUE, var.axes = FALSE, groups=labels)
 ```
 ```{r}
-ggbiplot()
+labels2 = unlist(demo_data[35])
+ggbiplot(demo_data.pca, ellipse=TRUE, var.axes = FALSE, groups=labels2)
 ```
 
 
