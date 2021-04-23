@@ -24,11 +24,17 @@ top_housing = top_housing %>%
   mutate(class = fct_reorder(city,price, .fun='median'))
 ```
 
-```{r}
+```{r message=FALSE}
 ggplot(top_housing, aes(x = price,y = reorder(class,price), fill = stat(x))) +
-  geom_density_ridges_gradient(scale = 3, rel_min_height = 0.01) +
-  scale_fill_viridis_c(name = "Price", option = 'C')+
-  xlim(0,3500000)
+  geom_density_ridges_gradient(scale = 1, rel_min_height = 0.01) +
+  scale_fill_viridis_c(name = "Price($)", option = 'C')+
+  labs(title = 'Top 10 Cities by Median Price',
+       x = "Price($)",
+       y = "City")+
+  scale_x_continuous(breaks = c(0,500000,1000000,1500000,2000000,2500000,3000000,3500000), 
+                     labels = c('0','500,000','1,000,000','1,500,000','2,000,000',
+                                '2,500,000','3,000,000','3,500,000'),
+                     limits = c(0,3500000))
 ```
 
 ```{r}
@@ -49,11 +55,17 @@ low_housing = low_housing %>%
   mutate(class = fct_reorder(city,price, .fun='median'))
 ```
 
-```{r}
+```{r message=FALSE}
 ggplot(low_housing, aes(x = price,y = reorder(class,price), fill = stat(x))) +
-  geom_density_ridges_gradient(scale = 3, rel_min_height = 0.01) +
-  scale_fill_viridis_c(name = "Price", option = 'C')+
-  xlim(0,3500000)
+  geom_density_ridges_gradient(scale = 1, rel_min_height = 0.01) +
+  scale_fill_viridis_c(name = "Price($)", option = 'C')+
+  labs(title = 'Tail 10 Cities by Median Price',
+       x = "Price($)",
+       y = "City")+
+  scale_x_continuous(breaks = c(0,500000,1000000,1500000,2000000,2500000,3000000,3500000), 
+                     labels = c('0','500,000','1,000,000','1,500,000','2,000,000',
+                                '2,500,000','3,000,000','3,500,000'),
+                     limits = c(0,3500000))
 ```
 
 ```{r}
@@ -84,11 +96,18 @@ all_housing = all_housing %>%
   mutate(class = fct_reorder(city,price, .fun='median'))
 ```
 
-```{r}
+```{r message=FALSE}
 ggplot(all_housing, aes(x = price,y = reorder(class,price), fill = stat(x))) +
   geom_density_ridges_gradient(scale = 5, rel_min_height = 0.01) +
-  scale_fill_viridis_c(name = "Price", option = 'C')+
-  xlim(0,3500000)
+  scale_fill_viridis_c(name = "Price($)", option = 'C')+
+
+  labs(title = 'Top 10 and Tail 10 Cities by Median Price',
+       x = "Price($)",
+       y = "City")+
+  scale_x_continuous(breaks = c(0,500000,1000000,1500000,2000000,2500000,3000000,3500000), 
+                     labels = c('0','500,000','1,000,000','1,500,000','2,000,000',
+                                '2,500,000','3,000,000','3,500,000'),
+                     limits = c(0,3500000))
 ```
 
 
