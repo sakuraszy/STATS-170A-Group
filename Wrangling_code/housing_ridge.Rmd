@@ -1,0 +1,94 @@
+```{r message=FALSE}
+library(ggridges)
+library(ggplot2)
+library(dplyr)
+library(tidyverse)
+library(forcats)
+```
+
+```{r}
+top_housing = filter(zip_housing, city == 'Palo Alto'|
+                       city == 'Newport Beach'|
+                       city == 'Mountain View'|
+                       city == 'Redwood City'|
+                       city == 'Santa Barbara'|
+                       city == 'Sunnyvale'|
+                       city == 'Santa Monica'|
+                       city == 'Encinitas'|
+                       city == 'San Francisco'|
+                       city == 'San Mateo')
+```
+
+```{r}
+top_housing = top_housing %>%
+  mutate(class = fct_reorder(city,price, .fun='median'))
+```
+
+```{r}
+ggplot(top_housing, aes(x = price,y = reorder(class,price), fill = stat(x))) +
+  geom_density_ridges_gradient(scale = 3, rel_min_height = 0.01) +
+  scale_fill_viridis_c(name = "Price", option = 'C')+
+  xlim(0,3500000)
+```
+
+```{r}
+low_housing = filter(zip_housing, city == 'Tulare'|
+                       city == 'Bakersfield'|
+                       city == 'Apple Valley'|
+                       city == 'Hemet'|
+                       city == 'Visalia'|
+                       city == 'Fresno'|
+                       city == 'Merced'|
+                       city == 'Madera'|
+                       city == 'Victorville'|
+                       city == 'Redding')
+```
+
+```{r}
+low_housing = low_housing %>%
+  mutate(class = fct_reorder(city,price, .fun='median'))
+```
+
+```{r}
+ggplot(low_housing, aes(x = price,y = reorder(class,price), fill = stat(x))) +
+  geom_density_ridges_gradient(scale = 3, rel_min_height = 0.01) +
+  scale_fill_viridis_c(name = "Price", option = 'C')+
+  xlim(0,3500000)
+```
+
+```{r}
+all_housing = filter(zip_housing, city == 'Palo Alto'|
+                       city == 'Newport Beach'|
+                       city == 'Mountain View'|
+                       city == 'Redwood City'|
+                       city == 'Santa Barbara'|
+                       city == 'Sunnyvale'|
+                       city == 'Santa Monica'|
+                       city == 'Encinitas'|
+                       city == 'San Francisco'|
+                       city == 'San Mateo'|
+                       city == 'Tulare'|
+                       city == 'Bakersfield'|
+                       city == 'Apple Valley'|
+                       city == 'Hemet'|
+                       city == 'Visalia'|
+                       city == 'Fresno'|
+                       city == 'Merced'|
+                       city == 'Madera'|
+                       city == 'Victorville'|
+                       city == 'Redding')
+```
+
+```{r}
+all_housing = all_housing %>%
+  mutate(class = fct_reorder(city,price, .fun='median'))
+```
+
+```{r}
+ggplot(all_housing, aes(x = price,y = reorder(class,price), fill = stat(x))) +
+  geom_density_ridges_gradient(scale = 5, rel_min_height = 0.01) +
+  scale_fill_viridis_c(name = "Price", option = 'C')+
+  xlim(0,3500000)
+```
+
+
