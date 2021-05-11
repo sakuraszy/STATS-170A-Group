@@ -22,6 +22,22 @@ top_housing = filter(zip_housing, city == 'Palo Alto'|
 ```{r}
 top_housing = top_housing %>%
   mutate(class = fct_reorder(city,price, .fun='median'))
+
+top_housing = top_housing %>%
+  mutate(class = fct_relevel(city,level = 'Santa Monica','San Francisco','Encinitas','Santa Barbara','San Mateo','Sunnyvale','Redwood City','Mountain View','Newport Beach','Palo Alto'))
+```
+
+```{r}
+ggplot(top_housing, aes(x = price, y = class)) + 
+  geom_density_ridges(scale = 1) + 
+  labs(title = 'Top 10 Cities by Median Price',
+       x = "Price($)",
+       y = "City") +
+  scale_x_continuous(breaks = c(0,500000,1000000,1500000,2000000,2500000,3000000,3500000), 
+                     labels = c('0','500,000','1,000,000','1,500,000','2,000,000',
+                                '2,500,000','3,000,000','3,500,000'),
+                     limits = c(0,3500000)) + 
+  stat_density_ridges(quantile_lines = TRUE, quantiles = 2, fill="grey80")
 ```
 
 ```{r message=FALSE}
@@ -53,6 +69,8 @@ low_housing = filter(zip_housing, city == 'Tulare'|
 ```{r}
 low_housing = low_housing %>%
   mutate(class = fct_reorder(city,price, .fun='median'))
+#low_housing = low_housing %>%
+ # mutate(class = fct_relevel(city,level = ))
 ```
 
 ```{r message=FALSE}
@@ -67,6 +85,20 @@ ggplot(low_housing, aes(x = price,y = reorder(class,price), fill = stat(x))) +
                                 '2,500,000','3,000,000','3,500,000'),
                      limits = c(0,3500000))
 ```
+
+```{r}
+ggplot(low_housing, aes(x = price, y = class)) + 
+  geom_density_ridges(scale = 1) + 
+  labs(title = 'Tail 10 Cities by Median Price',
+       x = "Price($)",
+       y = "City") +
+  scale_x_continuous(breaks = c(0,500000,1000000,1500000,2000000,2500000,3000000,3500000), 
+                     labels = c('0','500,000','1,000,000','1,500,000','2,000,000',
+                                '2,500,000','3,000,000','3,500,000'),
+                     limits = c(0,3500000)) + 
+  stat_density_ridges(quantile_lines = TRUE, quantiles = 2, fill="grey80")
+```
+
 
 ```{r}
 all_housing = filter(zip_housing, city == 'Palo Alto'|
