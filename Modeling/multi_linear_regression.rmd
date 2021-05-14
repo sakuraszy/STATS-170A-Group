@@ -1,0 +1,75 @@
+```{r message = FALSE}
+library(tidyverse)
+library(caret)
+library(leaps)
+library(MASS)
+```
+
+```{r}
+model <- lm(price ~ population + aland + median_household_income + average_household_income + 
+              per_capita_income + percent_of_households_with_incomes_200000_or_more +  
+              householder_under_25_years + householder_65_years_and_over + hhi_lt_25k + 
+              hhi_200k_or_more + race_and_ethnicity_total + population_density_sq_mi + 
+              median_age + educational_attainment_bachelors + educational_attainment_graduate + 
+              family_poverty_pct +unemployment_pct +housing_units+ median_value_of_owner_occupied_units + 
+              violent_crime_rate+ property_crime_rate + beds + baths + garage + lot_size + building_size, 
+            data = join_table)
+```
+
+```{r}
+summary(model)
+```
+```{r}
+summary(model)$coefficient
+```
+```{r}
+model_improved  <- lm(price ~ median_household_income + average_household_income + 
+              percent_of_households_with_incomes_200000_or_more +  
+              householder_under_25_years + hhi_lt_25k + population_density_sq_mi + 
+              educational_attainment_bachelors + educational_attainment_graduate + 
+              family_poverty_pct + median_value_of_owner_occupied_units + 
+              violent_crime_rate+ property_crime_rate + beds + baths + garage + building_size, 
+            data = join_table)
+summary(model_improved)
+```
+```{r}
+sigma(model_improved)/mean(join_table$price)
+```
+```{r}
+plot(model_improved)
+```
+
+```{r}
+test = lm(formula = price ~ beds + baths + building_size, data = join_table)
+summary(test)
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
