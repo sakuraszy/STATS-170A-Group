@@ -23,10 +23,10 @@ summary(model)
 summary(model)$coefficient
 ```
 ```{r}
-model_improved  <- lm(price ~ median_household_income + average_household_income + 
-              percent_of_households_with_incomes_200000_or_more +  
-              householder_under_25_years + hhi_lt_25k + population_density_sq_mi + 
-              educational_attainment_bachelors + educational_attainment_graduate + 
+model_improved  <- lm(log(price) ~  average_household_income + 
+              percent_of_households_with_incomes_200000_or_more +
+              hhi_lt_25k + population_density_sq_mi + 
+              educational_attainment_graduate + 
               family_poverty_pct + median_value_of_owner_occupied_units + 
               violent_crime_rate+ property_crime_rate + beds + baths + garage + building_size, 
             data = join_table)
@@ -44,13 +44,24 @@ test = lm(formula = price ~ beds + baths + building_size, data = join_table)
 summary(test)
 ```
 
+```{r}
+joint_table = join_table[(join_table[,38]>100000) & (join_table[,38]<50000000),]
+```
 
+```{r}
+model_improved  <- lm(log(price) ~  average_household_income + 
+              percent_of_households_with_incomes_200000_or_more +
+              hhi_lt_25k + population_density_sq_mi + 
+              educational_attainment_graduate + 
+              family_poverty_pct + median_value_of_owner_occupied_units + 
+              violent_crime_rate+ property_crime_rate + beds + baths + garage + building_size, 
+            data = joint_table)
+summary(model_improved)
+```
 
-
-
-
-
-
+```{r}
+plot(model_improved)
+```
 
 
 
