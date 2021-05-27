@@ -6,14 +6,17 @@ library(MASS)
 ```
 
 ```{r}
-model <- lm(price ~ population + aland + median_household_income + average_household_income + 
+model <- lm(log(price) ~ population + aland + median_household_income + average_household_income + 
               per_capita_income + percent_of_households_with_incomes_200000_or_more +  
               householder_under_25_years + householder_65_years_and_over + hhi_lt_25k + 
               hhi_200k_or_more + race_and_ethnicity_total + population_density_sq_mi + 
               median_age + educational_attainment_bachelors + educational_attainment_graduate + 
               family_poverty_pct +unemployment_pct +housing_units+ median_value_of_owner_occupied_units + 
-              violent_crime_rate+ property_crime_rate + beds + baths + garage + lot_size + building_size, 
-            data = join_table)
+              violent_crime_rate+ property_crime_rate + beds + baths + garage + lot_size + building_size +
+              rank + rankOf + rankStars + rankStatewidePercentage + averageStandardScore + has_elementary +
+              has_middle + has_high + ocean_related + environment_related + building_related + community_related +
+              positive_comments + more_rural + more_urban + other, 
+            data = housing_final_version)
 ```
 
 ```{r}
@@ -22,46 +25,103 @@ summary(model)
 ```{r}
 summary(model)$coefficient
 ```
+
 ```{r}
-model_improved  <- lm(log(price) ~  average_household_income + 
-              percent_of_households_with_incomes_200000_or_more +
-              hhi_lt_25k + population_density_sq_mi + 
-              educational_attainment_graduate + 
-              family_poverty_pct + median_value_of_owner_occupied_units + 
-              violent_crime_rate+ property_crime_rate + beds + baths + garage + building_size, 
-            data = join_table)
+model_improved  <- lm(log(price) ~ population + aland + median_household_income + average_household_income + 
+              per_capita_income + percent_of_households_with_incomes_200000_or_more +  
+              householder_under_25_years + householder_65_years_and_over + hhi_lt_25k + 
+              hhi_200k_or_more + race_and_ethnicity_total + population_density_sq_mi + 
+              median_age + educational_attainment_bachelors + 
+              family_poverty_pct +unemployment_pct + median_value_of_owner_occupied_units + 
+              violent_crime_rate+ property_crime_rate + beds + baths + garage + building_size +
+              rank + rankOf + rankStars + rankStatewidePercentage + averageStandardScore + has_elementary +
+              has_middle + has_high + ocean_related + environment_related +
+              positive_comments + more_rural + more_urban + other, 
+            data = housing_final_version)
 summary(model_improved)
 ```
 ```{r}
-sigma(model_improved)/mean(join_table$price)
+sigma(model_improved)/mean(log(housing_final_version$price))
 ```
 ```{r}
 plot(model_improved)
 ```
 
+# Training Model
 ```{r}
-test = lm(formula = price ~ beds + baths + building_size, data = join_table)
-summary(test)
+set.seed(123)
+random_sample <- createDataPartition(housing_final_version $ price,
+                                p = 0.8, list = FALSE)
+training_dataset  <- housing_final_version[random_sample, ]
+testing_dataset <- housing_final_version[-random_sample, ]
 ```
 
 ```{r}
-joint_table = join_table[(join_table[,38]>100000) & (join_table[,38]<50000000),]
+trctrl <- trainControl(method = "cv", number = 10)
+fit = train((price) ~ population + aland + median_household_income + average_household_income + 
+              per_capita_income + percent_of_households_with_incomes_200000_or_more +  
+              householder_under_25_years + householder_65_years_and_over + hhi_lt_25k + 
+              hhi_200k_or_more + race_and_ethnicity_total + population_density_sq_mi + 
+              median_age + educational_attainment_bachelors + 
+              family_poverty_pct +unemployment_pct + median_value_of_owner_occupied_units + 
+              violent_crime_rate+ property_crime_rate + beds + baths + garage + building_size +
+              rank + rankOf + rankStars + rankStatewidePercentage + averageStandardScore + has_elementary +
+              has_middle + has_high + ocean_related + environment_related +
+              positive_comments + more_rural + more_urban + other, data = housing_final_version,
+            method = "lm", trControl = trctrl)
 ```
 
 ```{r}
-model_improved  <- lm(log(price) ~  average_household_income + 
-              percent_of_households_with_incomes_200000_or_more +
-              hhi_lt_25k + population_density_sq_mi + 
-              educational_attainment_graduate + 
-              family_poverty_pct + median_value_of_owner_occupied_units + 
-              violent_crime_rate+ property_crime_rate + beds + baths + garage + building_size, 
-            data = joint_table)
-summary(model_improved)
+training_predictions = predict(fit,training_dataset)
+testing_predictions = predict(fit,testing_dataset)
 ```
 
 ```{r}
-plot(model_improved)
+data.frame( R2 = R2(training_predictions, training_dataset $ price),
+            RMSE = RMSE(training_predictions, training_dataset $ price),
+            MAE = MAE(training_predictions, training_dataset $ price))
 ```
+```{r}
+data.frame( R2 = R2(testing_predictions, testing_dataset $ price),
+            RMSE = RMSE(testing_predictions, testing_dataset $ price),
+            MAE = MAE(testing_predictions, testing_dataset $ price))
+```
+
+#----------------------
+
+```{r}
+model_nolog <- lm(price ~ population + aland + median_household_income + average_household_income + 
+              per_capita_income + percent_of_households_with_incomes_200000_or_more +  
+              householder_under_25_years + householder_65_years_and_over + hhi_lt_25k + 
+              hhi_200k_or_more + race_and_ethnicity_total + population_density_sq_mi + 
+              median_age + educational_attainment_bachelors + educational_attainment_graduate + 
+              family_poverty_pct +unemployment_pct +housing_units+ median_value_of_owner_occupied_units + 
+              violent_crime_rate+ property_crime_rate + beds + baths + garage + lot_size + building_size +
+              rank + rankOf + rankStars + rankStatewidePercentage + averageStandardScore + has_elementary +
+              has_middle + has_high + ocean_related + environment_related + building_related + community_related +
+              positive_comments + more_rural + more_urban + other, 
+            data = housing_final_version)
+summary(model_nolog)
+```
+
+```{r}
+model_nolog_improved <- lm(price ~ population + median_household_income + average_household_income + 
+              percent_of_households_with_incomes_200000_or_more +  
+              householder_under_25_years + householder_65_years_and_over + hhi_lt_25k + 
+              hhi_200k_or_more + race_and_ethnicity_total +
+              educational_attainment_bachelors + educational_attainment_graduate + 
+              unemployment_pct +housing_units+ median_value_of_owner_occupied_units + 
+              property_crime_rate + beds + baths + building_size +
+              rank + rankOf + rankStars + has_elementary +
+              has_high + ocean_related + building_related +
+              positive_comments + more_rural + more_urban + other, 
+            data = housing_final_version)
+summary(model_nolog_improved)
+```
+```{r}
+plot(model_nolog_improved)
+```
+
 
 
 
