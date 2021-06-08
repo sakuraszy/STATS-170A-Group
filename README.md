@@ -2,8 +2,8 @@
 
 # Welcome to House Pricing Predicting Capstone Project at UC Irvine
 
-Authors: Zhiyan/Gloria Shen 
-Junfeng Li 
+Authors: Zhiyan/Gloria Shen, 
+Junfeng Li, 
 Yuehai Shen
 
 
