@@ -7,7 +7,7 @@ Junfeng Li,
 Yuehai Shen
 
 
-## Notebook in Instruction
+## Notebook Instruction
 Open the models_training.ipynb in final_demonstration folder and run the file directly will show the model training part. Codes for other part of the project are in other folders as the folders names shown. 
 
 ## House Pricing Predicting 
