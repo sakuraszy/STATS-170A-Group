@@ -37,7 +37,9 @@ ggplot(top_housing, aes(x = price, y = class)) +
                      labels = c('0','500,000','1,000,000','1,500,000','2,000,000',
                                 '2,500,000','3,000,000','3,500,000'),
                      limits = c(0,3500000)) + 
-  stat_density_ridges(quantile_lines = TRUE, quantiles = 2, fill="grey80")
+  stat_density_ridges(quantile_lines = TRUE, quantiles = 2, fill="grey80") +
+  theme(text = element_text(size = 18),
+        axis.text.x = element_text(angle=30, hjust=1))
 ```
 
 ```{r message=FALSE}
@@ -96,7 +98,9 @@ ggplot(low_housing, aes(x = price, y = class)) +
                      labels = c('0','500,000','1,000,000','1,500,000','2,000,000',
                                 '2,500,000','3,000,000','3,500,000'),
                      limits = c(0,3500000)) + 
-  stat_density_ridges(quantile_lines = TRUE, quantiles = 2, fill="grey80")
+  stat_density_ridges(quantile_lines = TRUE, quantiles = 2, fill="grey80") +
+  theme(text = element_text(size = 18),
+        axis.text.x = element_text(angle=30, hjust=1))
 ```
 
 
